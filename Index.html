@@ -1,1 +1,354 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Portfolio | AI & Robotics</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0b0f19;
+    color: #e5e7eb;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    padding: 55px 8%;
+    background: #111827;
+    border-bottom: 1px solid #263244;
+}
+
+header h1 {
+    font-size: 38px;
+    color: white;
+}
+
+header p {
+    margin-top: 12px;
+    color: #9ca3af;
+    line-height: 1.7;
+}
+
+main {
+    padding: 40px 8%;
+}
+
+.section-title {
+    font-size: 25px;
+    margin-bottom: 25px;
+}
+
+.projects {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(250px, 1fr));
+    gap: 22px;
+}
+
+.project-card {
+    background: #151d2b;
+    border: 1px solid #263244;
+    border-radius: 12px;
+    padding: 23px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    border-color: #3b82f6;
+}
+
+.project-card h3 {
+    margin-bottom: 12px;
+    color: #60a5fa;
+}
+
+.project-card p {
+    color: #9ca3af;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.tags {
+    margin-top: 18px;
+}
+
+.tag {
+    display: inline-block;
+    background: #25334a;
+    color: #93c5fd;
+    padding: 5px 9px;
+    border-radius: 5px;
+    margin: 3px;
+    font-size: 12px;
+}
+
+.details {
+    display: none;
+    margin-top: 35px;
+    background: #151d2b;
+    border: 1px solid #3b82f6;
+    border-radius: 12px;
+    padding: 25px;
+}
+
+.details h2 {
+    color: #60a5fa;
+    margin-bottom: 15px;
+}
+
+.details p {
+    color: #cbd5e1;
+    line-height: 1.8;
+}
+
+.details h3 {
+    margin: 25px 0 12px;
+}
+
+.file-list {
+    list-style: none;
+}
+
+.file-list li {
+    padding: 12px;
+    background: #202c3d;
+    margin: 8px 0;
+    border-radius: 6px;
+}
+
+.file-list a {
+    color: #93c5fd;
+    text-decoration: none;
+}
+
+.file-list a:hover {
+    text-decoration: underline;
+}
+
+.close {
+    margin-top: 25px;
+    background: #263244;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #6b7280;
+    border-top: 1px solid #263244;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>My Portfolio</h1>
+    <p>
+        Robotics and AI Developer<br>
+        Exploring Artificial Intelligence,
+        Machine Learning and Technology.
+    </p>
+</header>
+
+<main>
+
+    <h2 class="section-title">My Projects</h2>
+
+    <div class="projects" id="projects"></div>
+
+    <section class="details" id="details">
+        <h2 id="projectName"></h2>
+
+        <p id="projectDescription"></p>
+
+        <div class="tags" id="projectTags"></div>
+
+        <h3>Project Files</h3>
+
+        <ul class="file-list" id="projectFiles"></ul>
+
+        <button class="close" onclick="closeProject()">
+            Close Project
+        </button>
+    </section>
+
+</main>
+
+<footer>
+    My Portfolio | Built with HTML, CSS & JavaScript
+</footer>
+
+<script>
+
+// ADD YOUR PROJECTS HERE
+
+const projects = [
+
+{
+    name: "Hopfield Network",
+    description:
+        "A 5x5 pixel-based Hopfield neural network " +
+        "that stores patterns and recalls them from noisy input.",
+
+    technologies: ["Python", "Neural Networks", "AI"],
+
+    files: [
+        {
+            name: "Main Python Code",
+            path: "projects/hopfield/main.py"
+        },
+        {
+            name: "Pattern Storage",
+            path: "projects/hopfield/patterns.py"
+        },
+        {
+            name: "Documentation",
+            path: "projects/hopfield/README.md"
+        }
+    ]
+},
+
+{
+    name: "Mini Language Model",
+    description:
+        "A small language model developed using PyTorch " +
+        "to learn word relationships from text data.",
+
+    technologies: ["Python", "PyTorch", "NLP"],
+
+    files: [
+        {
+            name: "Model Code",
+            path: "projects/language-model/model.py"
+        },
+        {
+            name: "Training Code",
+            path: "projects/language-model/train.py"
+        },
+        {
+            name: "Dataset",
+            path: "projects/language-model/data.txt"
+        }
+    ]
+}
+
+];
+
+// DISPLAY PROJECT CARDS
+
+function displayProjects() {
+
+    const container =
+        document.getElementById("projects");
+
+    container.innerHTML = "";
+
+    projects.forEach((project, index) => {
+
+        const card = document.createElement("div");
+
+        card.className = "project-card";
+
+        const heading = document.createElement("h3");
+        heading.textContent = project.name;
+
+        const description = document.createElement("p");
+        description.textContent = project.description;
+
+        const tags = document.createElement("div");
+        tags.className = "tags";
+
+        project.technologies.forEach(tech => {
+            const tag = document.createElement("span");
+            tag.className = "tag";
+            tag.textContent = tech;
+            tags.appendChild(tag);
+        });
+
+        card.append(heading, description, tags);
+
+        card.onclick = () => openProject(index);
+
+        container.appendChild(card);
+    });
+}
+
+// OPEN PROJECT DETAILS
+
+function openProject(index) {
+
+    const project = projects[index];
+
+    document.getElementById("projectName")
+        .textContent = project.name;
+
+    document.getElementById("projectDescription")
+        .textContent = project.description;
+
+    const tags = document.getElementById("projectTags");
+    tags.innerHTML = "";
+
+    project.technologies.forEach(tech => {
+        const span = document.createElement("span");
+        span.className = "tag";
+        span.textContent = tech;
+        tags.appendChild(span);
+    });
+
+    const fileList =
+        document.getElementById("projectFiles");
+
+    fileList.innerHTML = "";
+
+    project.files.forEach(file => {
+
+        const li = document.createElement("li");
+        const link = document.createElement("a");
+
+        link.href = file.path;
+        link.textContent = "📄 " + file.name;
+        link.target = "_blank";
+
+        li.appendChild(link);
+        fileList.appendChild(li);
+    });
+
+    const details = document.getElementById("details");
+
+    details.style.display = "block";
+
+    details.scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+// CLOSE DETAILS
+
+function closeProject() {
+    document.getElementById("details")
+        .style.display = "none";
+}
+
+// START WEBSITE
+
+displayProjects();
+
+</script>
+
+</body>
+</html>
+
